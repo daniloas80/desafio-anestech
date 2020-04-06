@@ -2,8 +2,6 @@ import Router from 'express';
 
 const routes = new Router();
 
-routes.get('/', (req, res) => {
-    return res.json({ message: 'dashboard'});
-})
+routes.get('/', (req, res) => res.json({ message: 'dashboard' }));
 
-module.exports = routes;
+export default routes;
