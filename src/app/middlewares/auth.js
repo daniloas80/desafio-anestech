@@ -18,7 +18,7 @@ export default async (req, res, next) => {
     const decoded = await promisify(jwt.verify)(token, authConfig.secret);
     // guardo a informação do id do usuário para que não seja necessário passar este id
     // como parâmetro na requisção da url no caso de edição de suas informações.
-    req.userId = decoded.id;
+    req.userId = decoded.user_id;
     req.roleId = decoded.role_id;
 
     return next();

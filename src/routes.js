@@ -32,8 +32,8 @@ routes.put('/roles/:id', restricted, RoleController.update);
 routes.delete('/roles/:id', restricted, RoleController.delete);
 // rotas para manipulação de usuários
 routes.get('/users', restricted, UserController.index);
-// routes.post('/roles', restricted, RoleController.store);
-// routes.put('/roles/:id', restricted, RoleController.update);
+routes.post('/users', restricted, UserController.store);
+routes.put('/users/:id', UserController.update);
 // routes.delete('/roles/:id', restricted, RoleController.delete);
 
 export default routes;
