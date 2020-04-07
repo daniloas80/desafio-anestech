@@ -15,7 +15,7 @@ class Roles extends Model {
   }
 
   // static associate(models) {
-  //   this.hasMany(models.User, { as: 'user' });
+  //   this.hasMany(models.Users, { as: 'users' });
   // }
 }
 
