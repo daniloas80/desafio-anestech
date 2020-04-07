@@ -1,7 +1,7 @@
 import Sequelize, { Model } from 'sequelize';
 import bcrypt from 'bcryptjs';
 
-class User extends Model {
+class Users extends Model {
   static init(sequelize) {
     super.init(
       {
@@ -35,11 +35,8 @@ class User extends Model {
 
   static associate(models) {
     // Um usuário só poderá ter um cargo
-    this.belongsTo(models.Roles, {
-      foreignKey: 'role_id',
-      as: 'roles',
-    });
+    this.belongsTo(models.Roles, { foreignKey: 'role_id', as: 'role' });
   }
 }
 
-export default User;
+export default Users;

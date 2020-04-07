@@ -13,6 +13,10 @@ class Roles extends Model {
 
     return this;
   }
+
+  // static associate(models) {
+  //   this.hasMany(models.User, { as: 'user' });
+  // }
 }
 
 export default Roles;

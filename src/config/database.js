@@ -1,13 +1,15 @@
+require('dotenv/config');
+
 module.exports = {
-  dialect: 'mariadb',
-  host: 'localhost',
-  username: 'root',
-  password: 'anestech2020',
-  database: 'dbanestech',
-  port: 3309,
+  dialect: process.env.DB_DIALECT,
+  host: process.env.DB_HOST,
+  username: process.env.DB_USER,
+  password: process.env.DB_PASS,
+  database: process.env.DB_NAME,
+  port: process.env.DB_PORT,
   define: {
-    timestamp: true,
+    timestamps: true,
     underscored: true,
-    inderscoredAll: true,
+    underscoredAll: true,
   },
 };

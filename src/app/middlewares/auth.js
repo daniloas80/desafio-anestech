@@ -19,6 +19,8 @@ export default async (req, res, next) => {
     // guardo a informação do id do usuário para que não seja necessário passar este id
     // como parâmetro na requisção da url no caso de edição de suas informações.
     req.userId = decoded.id;
+    req.roleId = decoded.role_id;
+
     return next();
   } catch (err) {
     return res.status(401).json({ error: 'Token invalid' });

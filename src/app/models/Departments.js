@@ -13,6 +13,13 @@ class Departments extends Model {
 
     return this;
   }
+
+  verifyPermission(req, res, next) {
+    if (req.roleId !== 1) {
+      return res.status(401).json({ error: 'unauthorized user' });
+    }
+    return next();
+  }
 }
 
 export default Departments;
