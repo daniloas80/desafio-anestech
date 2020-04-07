@@ -1,25 +1,25 @@
 import * as Yup from 'yup';
-import Departments from '../models/Departments';
+import Roles from '../models/Roles';
 
-class DepartmentsController {
+class RoleController {
   async index(req, res) {
     // Se o usuário estiver tentando fazer uma edição, a rota virá com o parâmentro id preenchido,
     // caso contrário, o usuário estará na página principal listando todos.
-    const department_id = req.params.id;
+    const role_id = req.params.id;
 
-    if (department_id > 0) {
-      const departments = await Departments.findByPk(department_id);
-      if (Object.keys(departments).length >= 1) {
-        return res.json(departments);
+    if (role_id > 0) {
+      const roles = await Roles.findByPk(role_id);
+      if (Object.keys(Roles).length >= 1) {
+        return res.json(roles);
       }
     }
 
-    const departments = await Departments.findAll();
+    const roles = await Roles.findAll();
 
-    if (Object.keys(departments).length >= 1) {
-      return res.json(departments);
+    if (Object.keys(roles).length >= 1) {
+      return res.json(roles);
     }
-    return res.json({ message: 'There is no Department to list' });
+    return res.json({ message: 'There is no Roles to list' });
   }
 
   async store(req, res) {
@@ -32,16 +32,16 @@ class DepartmentsController {
       return res.status(400).json({ error: 'Validation fails' });
     }
 
-    const departmentsExists = await Departments.findOne({
+    const rolesExists = await Roles.findOne({
       where: { name: req.body.name },
     });
 
-    if (departmentsExists) {
-      return res.status(400).json({ error: 'Department already exists' });
+    if (rolesExists) {
+      return res.status(400).json({ error: 'Role already exists' });
     }
 
     // desta forma retornamos somente as informações que precisamos para o frontend
-    const { name } = await Departments.create(req.body);
+    const { name } = await Roles.create(req.body);
     return res.json({
       name,
     });
@@ -58,25 +58,23 @@ class DepartmentsController {
     }
 
     // Verifica se o id da ajuda passado exite na base de dados
-    const departments = await Departments.findByPk(req.params.id);
+    const roles = await Roles.findByPk(req.params.id);
 
-    if (!departments) {
-      return res
-        .status(400)
-        .json({ error: 'There is no department with this id' });
+    if (!roles) {
+      return res.status(400).json({ error: 'There is no role with this id' });
     }
 
     const { name } = req.body;
 
-    if (name !== departments.name) {
-      const departmentExists = await Departments.findOne({ where: { name } });
+    if (name !== roles.name) {
+      const roleExists = await Roles.findOne({ where: { name } });
 
-      if (departmentExists) {
-        return res.status(400).json({ error: 'Department already exists' });
+      if (roleExists) {
+        return res.status(400).json({ error: 'Role already exists' });
       }
     }
 
-    const { id } = await departments.update(req.body);
+    const { id } = await roles.update(req.body);
     return res.json({
       id,
       name,
@@ -85,15 +83,13 @@ class DepartmentsController {
 
   async delete(req, res) {
     // Verifica se o id da ajuda passado exite na base de dados
-    const departments = await Departments.findByPk(req.params.id);
+    const roles = await Roles.findByPk(req.params.id);
 
-    if (!departments) {
-      return res
-        .status(400)
-        .json({ error: 'There is no department with this id' });
+    if (!roles) {
+      return res.status(400).json({ error: 'There is no role with this id' });
     }
     try {
-      return Departments.destroy({
+      return Roles.destroy({
         where: {
           id: req.params.id,
         },
@@ -108,4 +104,4 @@ class DepartmentsController {
     }
   }
 }
-export default new DepartmentsController();
+export default new RoleController();
