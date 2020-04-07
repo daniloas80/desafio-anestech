@@ -22,18 +22,25 @@ routes.post('/sessions', SessionController.store);
 routes.use(authMiddleware);
 // rotas para manipulação de departamentos
 routes.get('/departments', restricted, DepartmentController.index);
+routes.get(
+  '/departments/:id/show-departments',
+  restricted,
+  DepartmentController.index
+);
 routes.post('/departments', restricted, DepartmentController.store);
 routes.put('/departments/:id', restricted, DepartmentController.update);
 routes.delete('/departments/:id', restricted, DepartmentController.delete);
 // rotas para manipulação de cargos
 routes.get('/roles', restricted, RoleController.index);
+routes.get('/roles/:id/show-roles', restricted, RoleController.index);
 routes.post('/roles', restricted, RoleController.store);
 routes.put('/roles/:id', restricted, RoleController.update);
 routes.delete('/roles/:id', restricted, RoleController.delete);
 // rotas para manipulação de usuários
 routes.get('/users', restricted, UserController.index);
+routes.get('/users/:id/show-user', restricted, UserController.index);
 routes.post('/users', restricted, UserController.store);
 routes.put('/users/:id', UserController.update);
-// routes.delete('/roles/:id', restricted, RoleController.delete);
+// routes.put('/users/:id/?action=delete', restricted, UserController.update);
 
 export default routes;

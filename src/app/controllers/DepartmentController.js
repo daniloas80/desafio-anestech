@@ -40,7 +40,7 @@ class DepartmentsController {
       return res.status(400).json({ error: 'Department already exists' });
     }
 
-    // desta forma retornamos somente as informações que precisamos para o frontend
+    // desta forma retorno somente as informações que precisamos para o frontend
     const { name } = await Departments.create(req.body);
     return res.json({
       name,
@@ -57,7 +57,7 @@ class DepartmentsController {
       return res.status(400).json({ error: 'Validation fails' });
     }
 
-    // Verifica se o id da ajuda passado exite na base de dados
+    // Verifica se o id passado exite na base de dados
     const departments = await Departments.findByPk(req.params.id);
 
     if (!departments) {
@@ -84,7 +84,7 @@ class DepartmentsController {
   }
 
   async delete(req, res) {
-    // Verifica se o id da ajuda passado exite na base de dados
+    // Verifica se o id passado exite na base de dados
     const departments = await Departments.findByPk(req.params.id);
 
     if (!departments) {

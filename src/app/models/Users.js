@@ -11,6 +11,8 @@ class Users extends Model {
         // A propriedade VIRTUAL é usada temporariamente e sua informação não é lançada no db
         password: Sequelize.VIRTUAL,
         password_hash: Sequelize.STRING,
+        deleted_at: Sequelize.DATE,
+        deleted_by: Sequelize.INTEGER,
       },
       { sequelize }
     );

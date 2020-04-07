@@ -40,7 +40,7 @@ class RoleController {
       return res.status(400).json({ error: 'Role already exists' });
     }
 
-    // desta forma retornamos somente as informações que precisamos para o frontend
+    // desta forma retorno somente as informações que precisamos para o frontend
     const { name } = await Roles.create(req.body);
     return res.json({
       name,
@@ -57,7 +57,7 @@ class RoleController {
       return res.status(400).json({ error: 'Validation fails' });
     }
 
-    // Verifica se o id da ajuda passado exite na base de dados
+    // Verifica se o id passado exite na base de dados
     const roles = await Roles.findByPk(req.params.id);
 
     if (!roles) {
@@ -82,7 +82,7 @@ class RoleController {
   }
 
   async delete(req, res) {
-    // Verifica se o id da ajuda passado exite na base de dados
+    // Verifica se o id passado exite na base de dados
     const roles = await Roles.findByPk(req.params.id);
 
     if (!roles) {
