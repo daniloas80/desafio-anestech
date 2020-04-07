@@ -28,7 +28,7 @@ class Users extends Model {
     return this;
   }
 
-  checarSenha(password) {
+  verifyPassword(password) {
     // A função "compare" retorna true se a senha informada corresponde à senha criptografada no db
     return bcrypt.compare(password, this.password_hash);
   }

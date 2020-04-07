@@ -3,6 +3,7 @@ import Router from 'express';
 import SessionController from './app/controllers/SessionController';
 import DepartmentController from './app/controllers/DepartmentController';
 import RoleController from './app/controllers/RoleController';
+import UserController from './app/controllers/UserController';
 
 import authMiddleware from './app/middlewares/auth';
 import restricted from './app/middlewares/permissions';
@@ -29,4 +30,10 @@ routes.get('/roles', restricted, RoleController.index);
 routes.post('/roles', restricted, RoleController.store);
 routes.put('/roles/:id', restricted, RoleController.update);
 routes.delete('/roles/:id', restricted, RoleController.delete);
+// rotas para manipulação de usuários
+routes.get('/users', restricted, UserController.index);
+// routes.post('/roles', restricted, RoleController.store);
+// routes.put('/roles/:id', restricted, RoleController.update);
+// routes.delete('/roles/:id', restricted, RoleController.delete);
+
 export default routes;

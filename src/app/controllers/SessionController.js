@@ -37,7 +37,7 @@ class SessionController {
     // verifico se o usuário exite no banco e se a senha está batendo
     // não retorno para o usuário se o problema está no login ou no passwaord
     // assim, evito que o hacker use força bruta somente para o descobrimento da senha.
-    if (!user || !(await user.checarSenha(password))) {
+    if (!user || !(await user.verifyPassword(password))) {
       return res.status(401).json({ error: 'User or Password does not macth' });
     }
 
