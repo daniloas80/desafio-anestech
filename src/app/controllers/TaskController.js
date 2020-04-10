@@ -12,9 +12,9 @@ import Departments from '../models/Departments';
 
 class TasksController {
   async index(req, res) {
-    // o trecho abaixo é utilizado na condicional do where do 'findAll'
-    // se o usuário logado é administrador, ele poderá listar todas as tarefas
-    // caso seja um agente, ele só poderá listar somente as suas tarefas
+    // a funcção abaixo é utilizado na propriedade do where do 'findAll' na linha 151.
+    // Se o usuário logado é administrador, a função retornará todas as tarefas,
+    // caso não seja administrado, ou seja um agente, ele só poderá listar as suas próprias tarefas
     const operator = {
       not: { [Op.not]: null },
       eq: { [Op.eq]: req.userId },
@@ -26,16 +26,13 @@ class TasksController {
 
     // Se o usuário estiver tentando fazer uma edição, a rota virá com o parâmentro id preenchido,
     // caso contrário, o usuário estará na página principal listando todos.
-    // código que exibe somente a tarefa desejada
-    // o parâmetro passado precisa ser um campo da tabela tasks
+    // Código que exibe somente a tarefa desejada o parâmetro passado precisa ser um campo da tabela tasks
     const { id } = req.params;
-
     if (id > 0) {
       const tasks = await Tasks.findByPk(id);
       if (tasks) {
         return res.json(tasks);
       }
-
       return res.json({ message: 'There is no Task to list' });
     }
     // lista de tarefas por usuários
@@ -77,15 +74,15 @@ class TasksController {
       return res.json({ message: 'There is no user with this id' });
     }
 
-    // indicadores dos departamentos
-    // segue a mesma filosofia dos indicadores de usuários.
-    // há possibilidade de deixar menos verboso, mas por conta do prazo foi mais fácil assim.
-    // para este caso eu não passei um campo do banco de dados
+    // Indicadores dos departamentos
+    // Segue a mesma filosofia dos indicadores de usuários.
+    // Há possibilidade de deixar menos verboso, mas por conta do prazo foi mais fácil assim.
+    // Para este caso eu não passei um campo do banco de dados
     // (os req.params eu sempre passo como campos do db) porque precisava diferenciar
     // a rota para trazer as informações necessárias do usuário.
     const { p_department_id } = req.params;
-    // filtro por tarefa concluída. O padrão é 1 (concluído)
-    // código do status das tarefas
+    // Filtro por tarefa concluída. O padrão é 1 (concluído).
+    // Código do status das tarefas
     // 0 -> aberto; 1 -> em adamento; 2 -> finalizada
     if (Number(p_department_id) >= 0) {
       if (req.roleId !== 1) {
@@ -109,14 +106,14 @@ class TasksController {
           'FROM tasks LEFT OUTER JOIN departments on tasks.department_id = departments.id '
         }${insert_where} GROUP BY tasks.department_id`
       );
-      // caso encontre um resultado, ele será exibido no formato json
+      // Caso encontre um resultado, ele será exibido no formato json.
       if (Object.keys(results).length >= 1) {
         return res.json(results);
       }
       return res.json({ message: 'There is no department with this id' });
     }
 
-    // lista de tarefas por departamentos
+    // Lista de tarefas por departamentos.
     const { department_id } = req.params;
     if (department_id > 0) {
       const tasks = await Tasks.findAll({ where: { department_id } });
@@ -124,7 +121,7 @@ class TasksController {
         return res.json(tasks);
       }
     }
-    // abaixo há uma sequência de parâmentros para serem usadas em filtros
+    // Abaixo há uma sequência de parâmentros para serem usadas em filtros.
     // pesquisa por descrição da tarefa
     const where_like = req.query.text ? req.query.text : '';
     // pesquisa por nome do usuário
@@ -184,7 +181,7 @@ class TasksController {
   }
 
   async store(req, res) {
-    // código para validação das informações que são passada pelo usuário
+    // Código para validação das informações que são passada pelo usuário.
     const schema = Yup.object().shape({
       description: Yup.string().required(),
       status: Yup.number().required(),
