@@ -19,7 +19,8 @@ routes.post('/sessions', SessionController.store);
 // definindo a regra de autenticação de forma global
 // todas as rotas que vier após o middleware passará pela verificação de autenticação
 // rotas com o middleware 'restricted' significa que será verificado se o usuário
-// poderá acessar a rota ou não.
+// poderá acessar a rota ou não. Há rotas que são compartilhadas pelo administrado e o usuário
+// ndelas, eu faço a verificação da permissão do uso da funcionalidade em questão
 routes.use(authMiddleware);
 // rotas para manipulação de departamentos
 routes.get('/departments', restricted, DepartmentController.index);
@@ -49,11 +50,13 @@ routes.get('/tasks', TaskController.index);
 routes.get('/tasks/show-task/:id', TaskController.index);
 // lista todas as tarefas por usuário
 routes.get('/tasks/show-task/users/:user_id', TaskController.index);
+// lista a performace dos usuários
 // para listar a performance de todos os usuários: p_user_id = 0
 // para listar a performance de um usuário desejado: p_user_id = <id do usuário>
 routes.get('/tasks/show-performance/users/:p_user_id', TaskController.index);
 // lista todas as tarefas por departamento
 routes.get('/tasks/show-task/departments/:department_id', TaskController.index);
+// lista a performance dos departamentos
 // para listar a performance de todos os departamentos: p_department_id = 0
 // para listar a performance de um usuário desejado: p_department_id = <id do departamento>
 routes.get(
@@ -62,6 +65,16 @@ routes.get(
 );
 // lista todas as tarefas
 // para realizar filtros basta passar por query string os seguintes parâmentros
+// base_url/tasks/?text=&name=&department=&datetime=&sortby=&sortorder=&page=&records=
+// não há a necessidade de preencher todos os parâmetros
+// text -> pesquisa por descrição da tarefa
+// name -> pesquisa por nome do usuário
+// department -> pesquisa por nome do departamento
+// datetime -> pesquisa por data e hora ex: 2020-04-01 data expecífica; 2020-04 mês de abril ...
+// sortby -> ordenação que poderá ser feita por qualquer campo da tabela tasks ex.: id
+// sortorder -> orientação do pesquisa: ordem crescente ou decrescente [ASC, DESC]
+// page -> paginação da pesquisa
+// records -> quantidade de registro por página
 routes.get('/tasks/', TaskController.index);
 routes.post('/tasks', TaskController.store);
 routes.put('/tasks/:id', TaskController.update);

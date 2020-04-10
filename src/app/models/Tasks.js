@@ -17,10 +17,6 @@ class Tasks extends Model {
     return this;
   }
 
-  // static associations(models) {
-  //   this.hasMany(models.Users);
-  //   this.hasMany(models.Departments);
-  // }
   static associate(models) {
     this.belongsTo(models.Users, {
       foreignKey: 'user_id',
