@@ -38,6 +38,7 @@ class Users extends Model {
   static associate(models) {
     // Um usuário só poderá ter um cargo
     this.belongsTo(models.Roles, { foreignKey: 'role_id', as: 'role' });
+    this.hasMany(models.Tasks);
   }
 }
 

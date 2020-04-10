@@ -4,6 +4,7 @@ import SessionController from './app/controllers/SessionController';
 import DepartmentController from './app/controllers/DepartmentController';
 import RoleController from './app/controllers/RoleController';
 import UserController from './app/controllers/UserController';
+import TaskController from './app/controllers/TaskController';
 
 import authMiddleware from './app/middlewares/auth';
 import restricted from './app/middlewares/permissions';
@@ -23,7 +24,7 @@ routes.use(authMiddleware);
 // rotas para manipulação de departamentos
 routes.get('/departments', restricted, DepartmentController.index);
 routes.get(
-  '/departments/:id/show-departments',
+  '/departments/show-departments/:id',
   restricted,
   DepartmentController.index
 );
@@ -32,15 +33,38 @@ routes.put('/departments/:id', restricted, DepartmentController.update);
 routes.delete('/departments/:id', restricted, DepartmentController.delete);
 // rotas para manipulação de cargos
 routes.get('/roles', restricted, RoleController.index);
-routes.get('/roles/:id/show-roles', restricted, RoleController.index);
+routes.get('/roles/show-roles/:id', restricted, RoleController.index);
 routes.post('/roles', restricted, RoleController.store);
 routes.put('/roles/:id', restricted, RoleController.update);
 routes.delete('/roles/:id', restricted, RoleController.delete);
 // rotas para manipulação de usuários
 routes.get('/users', restricted, UserController.index);
-routes.get('/users/:id/show-user', restricted, UserController.index);
+routes.get('/users/show-user/:id', restricted, UserController.index);
 routes.post('/users', restricted, UserController.store);
 routes.put('/users/:id', UserController.update);
-// routes.put('/users/:id/?action=delete', restricted, UserController.update);
+// rotas para manipulação de tarefas
+// lista todas as tarefas
+routes.get('/tasks', TaskController.index);
+// lista uma tarefa expecífica. Usado para edição por exemplo
+routes.get('/tasks/show-task/:id', TaskController.index);
+// lista todas as tarefas por usuário
+routes.get('/tasks/show-task/users/:user_id', TaskController.index);
+// para listar a performance de todos os usuários: p_user_id = 0
+// para listar a performance de um usuário desejado: p_user_id = <id do usuário>
+routes.get('/tasks/show-performance/users/:p_user_id', TaskController.index);
+// lista todas as tarefas por departamento
+routes.get('/tasks/show-task/departments/:department_id', TaskController.index);
+// para listar a performance de todos os departamentos: p_department_id = 0
+// para listar a performance de um usuário desejado: p_department_id = <id do departamento>
+routes.get(
+  '/tasks/show-performance/departments/:p_department_id',
+  TaskController.index
+);
+// lista todas as tarefas
+// para realizar filtros basta passar por query string os seguintes parâmentros
+routes.get('/tasks/', TaskController.index);
+routes.post('/tasks', TaskController.store);
+routes.put('/tasks/:id', TaskController.update);
+routes.delete('/tasks/:id', restricted, TaskController.delete);
 
 export default routes;

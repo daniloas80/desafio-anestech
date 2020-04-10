@@ -3,9 +3,11 @@ import Sequelize from 'sequelize';
 import Users from '../app/models/Users';
 import Departments from '../app/models/Departments';
 import Roles from '../app/models/Roles';
+import Tasks from '../app/models/Tasks';
+
 import databaseConfig from '../config/database';
 
-const models = [Users, Departments, Roles];
+const models = [Users, Departments, Roles, Tasks];
 
 class Database {
   constructor() {

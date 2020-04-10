@@ -1,5 +1,4 @@
 /* eslint-disable no-case-declarations */
-/* eslint-disable eqeqeq */
 import { Op } from 'sequelize';
 import * as Yup from 'yup';
 import Users from '../models/Users';
@@ -107,7 +106,7 @@ class UserController {
         // user_id -> id passado para edição
         // req.userId -> id do usuário logado na aplicação
         if (req.roleId !== 1) {
-          if (user_id != req.userId) {
+          if (Number(user_id) !== req.userId) {
             return res.status(401).json({ error: 'Unauthorized user' });
           }
           // somente administradores podem alterar o cargo dos usuários
@@ -124,7 +123,7 @@ class UserController {
         // o administrador não pode alterar o seu próprio cargo,
         // mas poderá altear de outros usuários inclusive administradores
         if (req.roleId === 1 && req.body.role_id) {
-          if (req.userId == user_id) {
+          if (req.userId === Number(user_id)) {
             return res
               .status(401)
               .json({ erro: 'You can not change your own role' });
@@ -170,7 +169,7 @@ class UserController {
           return res.status(401).json({ error: 'Unauthorized to change' });
         }
         // o administrador não poderá deletar a si mesmo
-        if (req.userId == user_id) {
+        if (req.userId === Number(user_id)) {
           return res.status(401).json({ error: 'Unauthorized to change' });
         }
         await users.update({
@@ -183,38 +182,5 @@ class UserController {
         return res.status(400).json({ error: 'Bad request' });
     }
   }
-
-  // async delete(req, res) {
-  //   // Verifica se o id do usuário passado exite na base de dados
-  //   const user_id = req.params.id;
-  //   const users = await Users.findByPk(user_id);
-
-  //   if (!users) {
-  //     return res.status(400).json({ error: 'There is no user with this id' });
-  //   }
-  //   // ninguém é autorizado a deletar master de sistema
-  //   if (user_id === 1) {
-  //     return res.status(401).json({ erro: 'Unauthorized' });
-  //   }
-  //   // o administrador não poderá deletar o seu próprio usuário
-  //   if (req.userId == user_id) {
-  //     return res.status(401).json({ erro: 'You can not delete yourself' });
-  //   }
-
-  //   try {
-  //     return Roles.destroy({
-  //       where: {
-  //         id: req.params.id,
-  //       },
-  //     }).then(function checkDeleted(deletedRecord) {
-  //       if (deletedRecord === 1) {
-  //         res.status(200).json({ message: 'Deleted successfully' });
-  //       }
-  //       res.status(404).json({ message: 'Record not found' });
-  //     });
-  //   } catch (error) {
-  //     return res.status(500).json(error);
-  //   }
-  // }
 }
 export default new UserController();
