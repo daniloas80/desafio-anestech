@@ -1,4 +1,3 @@
-# Entrega do desafio Anestech.
 
 ## **Recursos utilizados**
 - **Servidor da API:** [NodeJS](https://nodejs.org/en/ "NodeJS") na versão **v10.17.0**
